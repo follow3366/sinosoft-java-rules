@@ -45,7 +45,7 @@ public class MyJavaRulesDefinition implements RulesDefinition {
   // don't change that because the path is hard coded in CheckVerifier
   private static final String RESOURCE_BASE_PATH = "/org/sonar/l10n/java/rules/squid";
 
-  public static final String REPOSITORY_KEY = "mycompany-java";
+  public static final String REPOSITORY_KEY = "sinosoft-java";
 
   private final Gson gson = new Gson();
 
@@ -53,7 +53,7 @@ public class MyJavaRulesDefinition implements RulesDefinition {
   public void define(Context context) {
     NewRepository repository = context
       .createRepository(REPOSITORY_KEY, "java")
-      .setName("MyCompany Custom Repository");
+      .setName("Sinosoft Repository");
 
     for (Class<? extends JavaCheck> check : RulesList.getChecks()) {
       new RulesDefinitionAnnotationLoader().load(repository, check);
