@@ -31,6 +31,7 @@ public class AvoidTreeListRule extends IssuableSubscriptionVisitor {
 
   @Override
   public List<Tree.Kind> nodesToVisit() {
+
     return Collections.singletonList(Tree.Kind.NEW_CLASS);
   }
 

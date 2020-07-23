@@ -30,31 +30,30 @@ import org.sonar.plugins.java.api.tree.Tree;
 
 @Rule(key = "AvoidMethodWithSameTypeInArgument")
 /**
- * To use subsctiption visitor, just extend the IssuableSubscriptionVisitor.
+ * 要使用subsctiption visitor，只需继承 IssuableSubscriptionVisitor。
  */
 public class MyCustomSubscriptionRule extends IssuableSubscriptionVisitor {
 
   @Override
   public List<Tree.Kind> nodesToVisit() {
-    // Register to the kind of nodes you want to be called upon visit.
+    // 注册到希望在访问时调用的节点类型。
     return Collections.singletonList(Tree.Kind.METHOD);
   }
 
   @Override
   public void visitNode(Tree tree) {
-    // Cast the node to the correct type :
-    // in this case we registered only to one kind so we will only receive MethodTree see Tree.Kind enum to know about which type you can
-    // cast depending on Kind.
+    // 将节点转换为正确的类型:
+    // 在本例中：我们只注册了一种类型，因此我们将只接收 Tree 中的 MethodTree 。枚举类型了解关于什么类型你可以依赖转换的类型。
     MethodTree methodTree = (MethodTree) tree;
-    // Retrieve symbol of method.
+    // 检索方法的符号
     MethodSymbol methodSymbol = methodTree.symbol();
     Type returnType = methodSymbol.returnType().type();
-    // Check method has only one argument.
+    // 检查方法只有一个参数。
     if (methodSymbol.parameterTypes().size() == 1) {
       Type argType = methodSymbol.parameterTypes().get(0);
-      // Verify argument type is same as return type.
+      // 验证参数类型与返回类型相同。
       if (argType.is(returnType.fullyQualifiedName())) {
-        // raise an issue on this node of the SyntaxTree
+        // 在SyntaxTree的这个节点上报告问题
         reportIssue(tree, "message");
       }
     }

@@ -30,6 +30,7 @@ import org.sonar.plugins.java.api.tree.IdentifierTree;
 import org.sonar.plugins.java.api.tree.MethodTree;
 import org.sonar.plugins.java.api.tree.Tree;
 
+// 避免使用某个注释
 @Rule(key = "AvoidAnnotation")
 public class AvoidAnnotationRule extends BaseTreeVisitor implements JavaFileScanner {
 
