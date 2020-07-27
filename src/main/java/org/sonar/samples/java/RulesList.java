@@ -45,7 +45,8 @@ public final class RulesList {
       UIControlActionLayerNamingRule.class,
       PageRecordNamingRule.class,
       BLFacadeLayerNamingRule.class,
-      BLActionLayerNamingRule.class));
+      BLActionLayerNamingRule.class,
+      DTOLayerNamingRule.class));
   }
 
   public static List<Class<? extends JavaCheck>> getJavaTestChecks() {
