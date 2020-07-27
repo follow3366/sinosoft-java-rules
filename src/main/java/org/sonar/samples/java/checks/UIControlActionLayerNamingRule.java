@@ -15,8 +15,8 @@ import java.util.regex.Pattern;
  * 检测规则：com.sinosoft.claim.ui.control.action 包下的类全部都要以“Facade”结尾,以 UI 开头。
  */
 
-@Rule(key="ActionLayerNamingRule")
-public class ActionLayerNamingRule extends BaseTreeVisitor implements JavaFileScanner {
+@Rule(key="UIControlActionLayerNamingRule")
+public class UIControlActionLayerNamingRule extends BaseTreeVisitor implements JavaFileScanner {
 
     private JavaFileScannerContext context;
     private Boolean isFacade = Boolean.FALSE;
@@ -52,5 +52,6 @@ public class ActionLayerNamingRule extends BaseTreeVisitor implements JavaFileSc
         if (isFacade && !pattern.matcher(className).matches()){
             context.reportIssue(this, tree.simpleName(), "重命名此类名以匹配 '" + format + "' 正则表达式");
         }
+        super.visitClass(tree);
     }
 }

@@ -11,6 +11,7 @@ import java.util.List;
 import org.sonar.check.Rule;
 import org.sonar.plugins.java.api.JavaFileScanner;
 import org.sonar.plugins.java.api.JavaFileScannerContext;
+import org.sonar.plugins.java.api.cfg.ControlFlowGraph;
 import org.sonar.plugins.java.api.tree.BaseTreeVisitor;
 import org.sonar.plugins.java.api.tree.ExpressionTree;
 import org.sonar.plugins.java.api.tree.MemberSelectExpressionTree;
@@ -41,34 +42,38 @@ public class HttpConnectionTimeoutChecks extends BaseTreeVisitor implements Java
     @Override
     public void visitMethod(MethodTree tree) {
         Boolean setTimeout = false;
-        List<Tree> vtl = tree.cfg().entryBlock().elements();
-        Boolean isVariable = false;
-        for (Tree vt : vtl) {
-            // 判断是否为 Variable 类型
-            isVariable = vt.kind().name().equals("Variable".toUpperCase());
-            // 判断变量类型是否为 HttpConnectionManagerParams、HttpURLConnection 类型
-            if (isVariable && ("HttpConnectionManagerParams".equals(((VariableTree) vt).type().toString())
-                    || "HttpURLConnection".equals(((VariableTree) vt).type().toString()))) {
+        List<? extends ControlFlowGraph.Block> tcbs = tree.cfg().blocks();
+        for (ControlFlowGraph.Block tcb : tcbs) {
+            List<Tree> vtl = tcb.elements();
+            Boolean isVariable = false;
+            for (Tree vt : vtl) {
+                // 判断是否为 Variable 类型
+                isVariable = vt.kind().name().equals("Variable".toUpperCase());
+                // 判断变量类型是否为 HttpConnectionManagerParams、HttpURLConnection 类型
+                if (isVariable && ("HttpConnectionManagerParams".equals(((VariableTree) vt).type().toString())
+                        || "HttpURLConnection".equals(((VariableTree) vt).type().toString()))) {
 
-                for (Tree mt : vtl) {
-                    if (mt.kind().name().equals("METHOD_INVOCATION".toUpperCase())) {
-                        // 获取方法名
-//                        System.out.println("MethodInvocationTree: "+((MemberSelectExpressionTree)(((MethodInvocationTree) mt).methodSelect())).expression().toString());
-//                        System.out.println("Variable: "+((VariableTree) vt).simpleName().toString());
-                        ExpressionTree mset = ((MethodInvocationTree) mt).methodSelect();
-                        // 获取变量名用： ((VariableTree) vt).simpleName()
-                        // 获取 MethodInvocation 名称： ((MemberSelectExpressionTree)(((MethodInvocationTree) mt).methodSelect())).expression().toString()
-                        if (((MemberSelectExpressionTree) mset).expression().toString().equals(((VariableTree) vt).simpleName().toString())
-                                && "setConnectionTimeout".equals(((MemberSelectExpressionTree) mset).identifier().toString())) {
-                            setTimeout = true;
+                    for (Tree mt : vtl) {
+                        if (mt.kind().name().equals("METHOD_INVOCATION".toUpperCase())) {
+                            // 获取方法名
+                            //                        System.out.println("MethodInvocationTree: "+((MemberSelectExpressionTree)(((MethodInvocationTree) mt).methodSelect())).expression().toString());
+                            //                        System.out.println("Variable: "+((VariableTree) vt).simpleName().toString());
+                            ExpressionTree mset = ((MethodInvocationTree) mt).methodSelect();
+                            // 获取变量名用： ((VariableTree) vt).simpleName()
+                            // 获取 MethodInvocation 名称： ((MemberSelectExpressionTree)(((MethodInvocationTree) mt).methodSelect())).expression().toString()
+                            if (((MemberSelectExpressionTree) mset).expression().toString().equals(((VariableTree) vt).simpleName().toString())
+                                    && "setConnectionTimeout".equals(((MemberSelectExpressionTree) mset).identifier().toString())) {
+                                setTimeout = true;
+                            }
                         }
                     }
-                }
-                if (!setTimeout) {
-                    context.reportIssue(this, vt, "Connection Variable's connection timeout not set");
+                    if (!setTimeout) {
+                        context.reportIssue(this, vt, "Connection Variable's connection timeout not set");
+                        setTimeout = false;
+                    }
                 }
             }
+            super.visitMethod(tree);
         }
-        super.visitMethod(tree);
     }
 }

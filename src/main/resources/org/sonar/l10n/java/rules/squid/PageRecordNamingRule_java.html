@@ -1,0 +1,31 @@
+<p> 在查询和翻页查询的方法中，PageRecord 对象的变量名必须命名为“pageRecord”。</p>
+<h2>不合规范代码示例</h2>
+<pre>
+    public PageRecord findByConditions(DBManager dbManager,String conditions,int pageNo,int rowsPerPage) throws Exception{
+
+        DBPrpLcertainLoss dbPrpLcertainLoss = new DBPrpLcertainLoss(dbManager);
+        Collection collection = new ArrayList();
+
+        collection = dbPrpLcertainLoss.findByQueryCondition(conditions,pageNo,rowsPerPage);
+
+        PageRecord pageRecord2 = new PageRecord(count,pageNo,1,rowsPerPage,collection);// Noncompliant
+
+        return pageRecord2;
+
+    }
+</pre>
+<h2>合规代码示例</h2>
+<pre>
+    public PageRecord findByConditions(DBManager dbManager,String conditions,int pageNo,int rowsPerPage) throws Exception{
+
+        DBPrpLcertainLoss dbPrpLcertainLoss = new DBPrpLcertainLoss(dbManager);
+        Collection collection = new ArrayList();
+
+        collection = dbPrpLcertainLoss.findByQueryCondition(conditions,pageNo,rowsPerPage);
+
+        PageRecord pageRecord = new PageRecord(count,pageNo,1,rowsPerPage,collection);// Compliant
+
+        return pageRecord;
+
+    }
+</pre>

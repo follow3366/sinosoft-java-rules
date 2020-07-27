@@ -40,17 +40,12 @@ public final class RulesList {
 
   public static List<Class<? extends JavaCheck>> getJavaChecks() {
     return Collections.unmodifiableList(Arrays.asList(
-      SpringControllerRequestMappingEntityRule.class,
-      AvoidAnnotationRule.class,
-      AvoidBrandInMethodNamesRule.class,
-      AvoidMethodDeclarationRule.class,
-      AvoidSuperClassRule.class,
-      AvoidTreeListRule.class,
-      MyCustomSubscriptionRule.class,
-      SecurityAnnotationMandatoryRule.class,
       HttpConnectionTimeoutChecks.class,
-      FacadeLayerNamingRule.class,
-      ActionLayerNamingRule.class));
+      UIControlFacadeLayerNamingRule.class,
+      UIControlActionLayerNamingRule.class,
+      PageRecordNamingRule.class,
+      BLFacadeLayerNamingRule.class,
+      BLActionLayerNamingRule.class));
   }
 
   public static List<Class<? extends JavaCheck>> getJavaTestChecks() {
