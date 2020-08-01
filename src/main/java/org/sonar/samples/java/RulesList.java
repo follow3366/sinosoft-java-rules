@@ -46,7 +46,10 @@ public final class RulesList {
       PageRecordNamingRule.class,
       BLFacadeLayerNamingRule.class,
       BLActionLayerNamingRule.class,
-      DTOLayerNamingRule.class));
+      DTOLayerNamingRule.class,
+      AvoidVariablesInBLFacadePackages.class,
+      BLLayerNamingRule.class,
+      RequestSetAttributeCheck.class));
   }
 
   public static List<Class<? extends JavaCheck>> getJavaTestChecks() {

@@ -11,14 +11,14 @@ public class HttpConnectionTimeoutCheck {
     }
 
     public static String doTestHttpURLGet(){
-        if (conn==null){
+        if (true){
             HttpURLConnection conn = null; // Noncompliant {{Connection Variable's connection timeout not set}}
         }
         HttpURLConnection conn = null; // Noncompliant {{Connection Variable's connection timeout not set}}
     }
     public static String doTestHttpURLGetRight(){
-        if (conn==null){
-            if (conn==null)
+        if (true){
+            if (true)
             HttpURLConnection conn = null; // Noncompliant {{Connection Variable's connection timeout not set}}
         }
         HttpURLConnection conn = null; // Noncompliant {{Connection Variable's connection timeout not set}}

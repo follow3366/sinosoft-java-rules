@@ -1,0 +1,24 @@
+<p>com.sinosoft.claim.bl.facade 包下类不能定义任何变量。</p>
+<h2>不合规范代码示例</h2>
+<pre>
+package com.sinosoft.claim.bl.facade;
+
+public class BLCiClaimUploadMainLogFacade extends BLCiClaimUploadMainLogFacadeBase{
+
+    private String str; // Noncompliant
+
+    public BLCiClaimUploadMainLogFacade(){
+        super();
+    }
+}
+</pre>
+<h2>合规代码示例</h2>
+<pre>
+package com.sinosoft.claim.bl.facade;
+public class BLCiClaimUploadMainLogFacade extends BLCiClaimUploadMainLogFacadeBase{
+
+    public BLCiClaimUploadMainLogFacade(){
+        super();
+    }
+}
+</pre>
