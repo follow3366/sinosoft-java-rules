@@ -59,14 +59,14 @@ public class RequestSetAttributeCheck extends BaseTreeVisitor implements JavaFil
                 List<Tree> vtl = tcb.elements();
                 for (Tree vt : vtl) {
                     // 判断为 Variable 类型 并且 变量类型为 PageRecord 类型
-                    if (vt.kind().name().equals("Variable".toUpperCase()) && ("PageRecord".equals(((VariableTree) vt).type().toString()))) {
+                    if (vt.is(Tree.Kind.VARIABLE) && ("PageRecord".equals(((VariableTree) vt).type().toString()))) {
 
                         // 再来循环方法 进行编码规则校验
                         for (ControlFlowGraph.Block tcbi : tcbs) {
                             List<Tree> vtli = tcbi.elements();
                             for (Tree vti : vtli) {
                                 // 如果碰到 HttpServletRequest.setAttribute() 方法，则校验一下括号内参数类型是否为 PageRecord
-                                if (vti.kind().name().equals("METHOD_INVOCATION".toUpperCase())) {
+                                if (vti.is(Tree.Kind.METHOD_INVOCATION)) {
                                     ExpressionTree mset = ((MethodInvocationTree) vti).methodSelect();
                                     Arguments arguments =((MethodInvocationTree) vti).arguments();
 

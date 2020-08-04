@@ -20,7 +20,6 @@ public class BLFacadeLayerNamingRule extends BaseTreeVisitor implements JavaFile
 
     private JavaFileScannerContext context;
     private Boolean isFacade = Boolean.FALSE;
-    private Boolean isBase = Boolean.FALSE;
     private static final String DEFAULT_FORMAT = "^[A-Z][a-zA-Z0-9]*Facade$";
 
     @RuleProperty(

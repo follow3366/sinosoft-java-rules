@@ -8,37 +8,36 @@ import org.sonar.plugins.java.api.tree.BaseTreeVisitor;
 import org.sonar.plugins.java.api.tree.ClassTree;
 import org.sonar.plugins.java.api.tree.CompilationUnitTree;
 
+import java.util.regex.Pattern;
+
 /**
- * 检测规则：业务层的类必须以 BL 开头。
+ * 持久层的类必须以 DB 开头；
  */
-
-@Rule(key="BLLayerNamingRule")
-public class BLLayerNamingRule extends BaseTreeVisitor implements JavaFileScanner {
-
-    private JavaFileScannerContext context;
-    private Boolean isBL = Boolean.FALSE;
+@Rule(key = "PersistenceLayerNamingRule")
+public class PersistenceLayerNamingRule extends BaseTreeVisitor implements JavaFileScanner {
+    JavaFileScannerContext context;
+    Boolean isDBLayer = Boolean.FALSE;
+    public String format = "^DB[A-Z][a-zA-Z0-9]*";
+    private Pattern pattern = null;
 
     @Override
     public void scanFile(JavaFileScannerContext context) {
+        pattern = Pattern.compile(format, Pattern.DOTALL);
         this.context = context;
         scan(context.getTree());
     }
 
     @Override
     public void visitCompilationUnit(CompilationUnitTree tree) {
-        if (tree.packageDeclaration() != null) {
-            String name = PackageUtils.packageName(tree.packageDeclaration(), ".");
-            isBL = name.contains(".bl.");//true
-        }
+
+        isDBLayer= PackageUtils.packageName(tree.packageDeclaration(), ".").contains(".dtofactory.");
         super.visitCompilationUnit(tree);
     }
 
     @Override
     public void visitClass(ClassTree tree) {
-        String className = tree.simpleName().toString();
-        int len = className.length();
-        if (isBL && !className.startsWith("BL")){
-            context.reportIssue(this, tree.simpleName(), "业务层的类必须以 BL 开头。");
+        if (isDBLayer && !pattern.matcher(tree.simpleName().toString()).matches()){
+            context.reportIssue(this,tree.simpleName(),"持久层的类名必须以 DB 开头");
         }
         super.visitClass(tree);
     }

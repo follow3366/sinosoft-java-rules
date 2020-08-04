@@ -1,0 +1,47 @@
+<p>在业务层类中不允许出现拼写 SQL 的语句</p>
+<h2>不合规范代码示例</h2>
+<pre>
+public PrpDuserDto checkUserSurvyPower(DBManager dbManager,
+                                       String userCode, String password) throws SQLException, Exception {
+    PrpDuserDto prpDuserDto = null;
+    try {
+        String conditions = " VALIDSTATUS = '1' AND usercode='"+userCode+"' AND password='"+password+"'"  // Noncompliant {{在业务层类中不允许出现conditions拼写 SQL 的语句。}}
+                +"    AND EXISTS (SELECT 1                                                                "
+                +"            FROM UTIUSERGRADE U, UTIGRADETASK G                                             "
+                +"        WHERE PrpDuser.USERCODE = U.USERCODE                                                       "
+                +"          AND U.GRADECODE = G.GRADECODE                                                    "
+                +"          AND U.VALIDSTATUS = '1'                                                           "
+                +"          AND G.TASKCODE IN ('"+TaskConstant.CAR_CHECK +"', '"+TaskConstant.CAR_CERTA+"'))                          ";
+        Collection collection = new DBPrpDuser(dbManager).findByConditions(conditions,0, 0);
+        if ((collection != null) && (collection.size() >= 1)) {
+            prpDuserDto = (PrpDuserDto) collection.iterator().next();
+        }
+    } catch (Exception e) {
+        e.printStackTrace();
+        throw e;
+    } finally {
+        dbManager.close();
+    }
+    return prpDuserDto;
+}
+</pre>
+<h2>合规代码示例</h2>
+<pre>
+public PrpDuserDto checkUserSurvyPower(DBManager dbManager,
+                                       String userCode, String password) throws SQLException, Exception {
+    PrpDuserDto prpDuserDto = null;
+    try {
+        String conditions = "1=1";  // Compliant
+        Collection collection = new DBPrpDuser(dbManager).findByConditions(conditions,0, 0);
+        if ((collection != null) && (collection.size() >= 1)) {
+            prpDuserDto = (PrpDuserDto) collection.iterator().next();
+        }
+    } catch (Exception e) {
+        e.printStackTrace();
+        throw e;
+    } finally {
+        dbManager.close();
+    }
+    return prpDuserDto;
+}
+</pre>

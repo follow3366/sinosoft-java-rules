@@ -49,7 +49,8 @@ public final class RulesList {
       DTOLayerNamingRule.class,
       AvoidVariablesInBLFacadePackages.class,
       BLLayerNamingRule.class,
-      RequestSetAttributeCheck.class));
+      RequestSetAttributeCheck.class,
+      SQLStatementsNotAllowedInBLLayer.class));
   }
 
   public static List<Class<? extends JavaCheck>> getJavaTestChecks() {

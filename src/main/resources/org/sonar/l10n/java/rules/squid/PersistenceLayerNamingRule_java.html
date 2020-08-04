@@ -1,0 +1,17 @@
+<p>持久层的类名必须以 DB 开头</p>
+<h2>不合规范代码示例</h2>
+<pre>
+package com.sinosoft.claim.resource.dtofactory.custom;
+
+public class ABAcciClaimPend {  // Noncompliant
+
+    }
+</pre>
+<h2>合规代码示例</h2>
+<pre>
+package com.sinosoft.claim.resource.dtofactory.custom;
+
+public class DBAcciClaimPend {  // Noncompliant
+
+    }
+</pre>
