@@ -50,7 +50,9 @@ public final class RulesList {
       AvoidVariablesInBLFacadePackages.class,
       BLLayerNamingRule.class,
       RequestSetAttributeCheck.class,
-      SQLStatementsNotAllowedInBLLayer.class));
+      SQLStatementsNotAllowedInBLLayer.class,
+      PersistenceLayerNamingRule.class,
+      PersistenceLayerShouldNotCalledByBLFacade.class));
   }
 
   public static List<Class<? extends JavaCheck>> getJavaTestChecks() {

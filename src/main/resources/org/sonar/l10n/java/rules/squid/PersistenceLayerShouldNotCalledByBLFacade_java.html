@@ -1,0 +1,49 @@
+<p>BLfacade 层不能调用持久层的类。</p>
+<h2>不合规范代码示例</h2>
+<pre>
+package com.sinosoft.claim.bl.facade;
+
+public class BLClaimPendFacade {
+
+    public void save(ClaimPendDto claimPendDto) throws SQLException, Exception {
+        DBManager dbManager = new DBManager();
+        dbManager.open(AppConfig.get("sysconst.DBJNDI"));
+        dbManager.beginTransaction();
+        try {
+            new DBClaimPend().save(dbManager, claimPendDto); // Noncompliant
+            dbManager.commitTransaction();
+        } catch (SQLException sqle) {
+            sqle.printStackTrace();
+            dbManager.rollbackTransaction();
+            throw sqle;
+        } finally {
+            // 关闭数据库连接
+            dbManager.close();
+        }
+    }
+}
+</pre>
+<h2>合规代码示例</h2>
+<pre>
+package com.sinosoft.claim.bl.facade;
+
+public class BLClaimPendFacade {
+
+    public void save(ClaimPendDto claimPendDto) throws SQLException, Exception {
+        DBManager dbManager = new DBManager();
+        dbManager.open(AppConfig.get("sysconst.DBJNDI"));
+        dbManager.beginTransaction();
+        try {
+            new BLClaimPendAction().save(dbManager, claimPendDto); // Compliant
+            dbManager.commitTransaction();
+        } catch (SQLException sqle) {
+            sqle.printStackTrace();
+            dbManager.rollbackTransaction();
+            throw sqle;
+        } finally {
+            // 关闭数据库连接
+            dbManager.close();
+        }
+    }
+}
+</pre>
