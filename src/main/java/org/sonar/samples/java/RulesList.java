@@ -52,7 +52,8 @@ public final class RulesList {
       RequestSetAttributeCheck.class,
       SQLStatementsNotAllowedInBLLayer.class,
       PersistenceLayerNamingRule.class,
-      PersistenceLayerShouldNotCalledByBLFacade.class));
+      PersistenceLayerShouldNotCalledByBLFacade.class,
+      DTOCustomShouldImplementsSerializable.class));
   }
 
   public static List<Class<? extends JavaCheck>> getJavaTestChecks() {
