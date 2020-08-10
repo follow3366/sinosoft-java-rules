@@ -56,7 +56,8 @@ public final class RulesList {
       DTOCustomShouldImplementsSerializable.class,
       DtoClassPropertiesShouldBeJavaObject.class,
       ForbiddenSaveBusinessDataToSession.class,
-      AvoidUsingWildcardInSelectStatement.class));
+      AvoidUsingWildcardInSelectStatement.class,
+      UsingPreMatch.class));
   }
 
   public static List<Class<? extends JavaCheck>> getJavaTestChecks() {
