@@ -1,0 +1,41 @@
+<p>代码中select *中的*号要用具体字段名替换。</p>
+<h2>不合规范代码示例</h2>
+<pre>
+package com.sinosoft.resource.dtofactory.domain;
+
+public class DBPrpPproductBase{
+    public int getCount(String conditions)
+            throws Exception{
+        int count = -1;
+        StringBuffer buffer = new StringBuffer(100);
+        buffer.append("SELECT count(*) FROM (SELECT * FROM PrpPproduct WHERE "); // Noncompliant
+        buffer.append(conditions);
+        buffer.append(")");
+        ResultSet resultSet = dbManager.executeQuery(buffer.toString());
+        resultSet.next();
+        count = dbManager.getInt(resultSet,1);
+        resultSet.close();
+        return count;
+    }
+}
+</pre>
+<h2>合规代码示例</h2>
+<pre>
+package com.sinosoft.resource.dtofactory.domain;
+
+public class DBPrpPproductBase{
+    public int getCount(String conditions)
+            throws Exception{
+        int count = -1;
+        StringBuffer buffer = new StringBuffer(100);
+        buffer.append("SELECT count(*) FROM (SELECT productcode FROM PrpPproduct WHERE "); // Compliant
+        buffer.append(conditions);
+        buffer.append(")");
+        ResultSet resultSet = dbManager.executeQuery(buffer.toString());
+        resultSet.next();
+        count = dbManager.getInt(resultSet,1);
+        resultSet.close();
+        return count;
+    }
+}
+</pre>

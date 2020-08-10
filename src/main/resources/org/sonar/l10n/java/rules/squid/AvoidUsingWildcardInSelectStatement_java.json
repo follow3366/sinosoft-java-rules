@@ -1,0 +1,15 @@
+{
+  "title": "AvoidUsingWildcardInSelectStatement",
+  "type": "CODE_SMELL",
+  "status": "ready",
+  "remediation": {
+    "func": "Constant\/Issue",
+    "constantCost": "5min"
+  },
+  "tags": [
+    "sql",
+    "zking",
+    "bad-performance"
+  ],
+  "defaultSeverity": "Major"
+}
