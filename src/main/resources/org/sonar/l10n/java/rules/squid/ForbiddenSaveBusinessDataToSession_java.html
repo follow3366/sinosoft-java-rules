@@ -1,0 +1,36 @@
+<p>Session中禁止存放业务数据或单个 String 对象。</p>
+<p>从短期看，通过一个key将数据放在Session中快捷而容易，但从长远看，这将导致一个极难维护的系统。Session中禁止存放业务数据。只有与用户相关的数据才需要存放在Session中，同时也不要将单个String对象保存在Session中，而应当将相关的数据域组织成一个POJO对象存放在Session中。</p>
+<h2>不合规范代码示例</h2>
+<pre>
+package com.sinosoft.claim.lossCEAntiFraud.ui.facade;
+
+public class UIShowRiskReportForVerifFacade extends Action{
+
+    @Override
+    public ActionForward execute(ActionMapping mapping, ActionForm form,
+                                 HttpServletRequest request, HttpServletResponse response)
+            throws Exception {
+
+            HttpSession session = request.getSession();
+            String registNo = request.getParameter("registNo");
+            session.setAttribute("registNo", registNo); // Noncompliant
+        }
+    }
+
+</pre>
+<h2>合规代码示例</h2>
+<pre>
+public class UIShowRiskReportForVerifFacade extends Action{
+
+    @Override
+    public ActionForward execute(ActionMapping mapping, ActionForm form,
+                                 HttpServletRequest request, HttpServletResponse response)
+            throws Exception {
+
+            HttpSession session = request.getSession();
+            List&lt;PrpLAntiFraudRiskDto&gt; nonStandardOperations = new ArrayList&lt;PrpLAntiFraudRiskDto&gt;();
+            session.setAttribute("nonStandardOperations", nonStandardOperations); // Compliant
+    }
+}
+
+</pre>

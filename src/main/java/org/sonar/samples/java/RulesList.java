@@ -54,7 +54,8 @@ public final class RulesList {
       PersistenceLayerNamingRule.class,
       PersistenceLayerShouldNotCalledByBLFacade.class,
       DTOCustomShouldImplementsSerializable.class,
-      DtoClassPropertiesShouldBeJavaObject.class));
+      DtoClassPropertiesShouldBeJavaObject.class,
+      ForbiddenSaveBusinessDataToSession.class));
   }
 
   public static List<Class<? extends JavaCheck>> getJavaTestChecks() {
