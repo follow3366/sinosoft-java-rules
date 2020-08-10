@@ -1,0 +1,47 @@
+<p>所有的 Dto 类的属性必须是 JAVA 对象，不允许使用原始数据类型。</p>
+<h2>不合规范代码示例</h2>
+<pre>
+package com.sinosoft.claim.dto.claimdamages;
+
+public class DamagesItemKind {
+
+    private String insureTerm;//险别名称
+    private String insureTermCode;//险别代码
+    private int insurecode;                 // Noncompliant
+    public String getInsureTerm() {
+        return insureTerm;
+    }
+    public void setInsureTerm(String insureTerm) {
+        this.insureTerm = insureTerm;
+    }
+    public String getInsureTermCode() {
+        return insureTermCode;
+    }
+    public void setInsureTermCode(String insureTermCode) {
+        this.insureTermCode = insureTermCode;
+    }
+}
+</pre>
+<h2>合规代码示例</h2>
+<pre>
+package com.sinosoft.claim.dto.claimdamages;
+
+public class DamagesItemKind {
+
+    private String insureTerm;//险别名称
+    private String insureTermCode;//险别代码
+    private String insurecode;              // Compliant
+    public String getInsureTerm() {
+        return insureTerm;
+    }
+    public void setInsureTerm(String insureTerm) {
+        this.insureTerm = insureTerm;
+    }
+    public String getInsureTermCode() {
+        return insureTermCode;
+    }
+    public void setInsureTermCode(String insureTermCode) {
+        this.insureTermCode = insureTermCode;
+    }
+}
+</pre>

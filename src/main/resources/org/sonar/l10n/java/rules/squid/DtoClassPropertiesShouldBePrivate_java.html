@@ -1,0 +1,17 @@
+<p>Dto类属性需用private修饰并初始化为null。</p>
+<h2>不合规范代码示例</h2>
+<pre>
+package com.sinosoft.claim.dto.claimdamages;
+
+public class DamagesItemKind {
+    public String insurecode = "011100001010101"; // Noncompliant
+}
+</pre>
+<h2>合规代码示例</h2>
+<pre>
+package com.sinosoft.claim.dto.claimdamages;
+
+public class DamagesItemKind {
+    public String insurecode = null;  // Compliant
+}
+</pre>
