@@ -13,7 +13,6 @@ public class DBPrpPproductBase{
             throws Exception{
         int count = -1;
         StringBuffer buffer = new StringBuffer(100);
-        buffer.append("SELECT count(*) FROM (SELECT * FROM PrpPproduct WHERE ");
         buffer.append("SELECT prpdcode FROM PrpPproduct WHERE prpdcode like '%2020%'");// Noncompliant {{like子句尽量前端匹配，前端匹配可以使用索引，其他不能使用索引。}}
         buffer.append(conditions);
         buffer.append(")");
