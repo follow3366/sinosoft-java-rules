@@ -57,7 +57,8 @@ public final class RulesList {
       DtoClassPropertiesShouldBeJavaObject.class,
       ForbiddenSaveBusinessDataToSession.class,
       AvoidUsingWildcardInSelectStatement.class,
-      UsingPreMatch.class));
+      UsingPreMatch.class,
+      AviodUsingHttpServletRequestToGetParam.class));
   }
 
   public static List<Class<? extends JavaCheck>> getJavaTestChecks() {
