@@ -36,7 +36,7 @@ public class PersistenceLayerNamingRule extends BaseTreeVisitor implements JavaF
 
     @Override
     public void visitClass(ClassTree tree) {
-        if (isDBLayer && !pattern.matcher(tree.simpleName().toString()).matches()){
+        if (isDBLayer && (null != tree.simpleName()) && !pattern.matcher(tree.simpleName().toString()).matches()){
             context.reportIssue(this,tree.simpleName(),"持久层的类名必须以 DB 开头");
         }
         super.visitClass(tree);

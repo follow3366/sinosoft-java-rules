@@ -26,7 +26,8 @@ public class BLLayerNamingRule extends BaseTreeVisitor implements JavaFileScanne
 
     @Override
     public void visitCompilationUnit(CompilationUnitTree tree) {
-        if (tree.packageDeclaration() != null) {
+        isBL = Boolean.FALSE;
+        if (null != tree.packageDeclaration()) {
             String name = PackageUtils.packageName(tree.packageDeclaration(), ".");
             isBL = name.contains(".bl.");//true
         }
@@ -35,9 +36,7 @@ public class BLLayerNamingRule extends BaseTreeVisitor implements JavaFileScanne
 
     @Override
     public void visitClass(ClassTree tree) {
-        String className = tree.simpleName().toString();
-        int len = className.length();
-        if (isBL && !className.startsWith("BL")){
+        if (isBL && (null != tree.simpleName()) && !tree.simpleName().toString().startsWith("BL")){
             context.reportIssue(this, tree.simpleName(), "业务层的类必须以 BL 开头。");
         }
         super.visitClass(tree);

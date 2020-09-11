@@ -39,7 +39,8 @@ public class DTOLayerNamingRule extends BaseTreeVisitor implements JavaFileScann
 
     @Override
     public void visitCompilationUnit(CompilationUnitTree tree) {
-        if (tree.packageDeclaration() != null) {
+        isDto = Boolean.FALSE;
+        if (null != tree.packageDeclaration()) {
             String name = PackageUtils.packageName(tree.packageDeclaration(), ".");
             isDto = name.equals("com.sinosoft.claim.dto.custom");//true
         }
@@ -48,10 +49,12 @@ public class DTOLayerNamingRule extends BaseTreeVisitor implements JavaFileScann
 
     @Override
     public void visitClass(ClassTree tree) {
-        String className = tree.simpleName().toString();
-        if (isDto && !pattern.matcher(className).matches()){
-            context.reportIssue(this, tree.simpleName(), "重命名此类名以匹配 '" + format + "' 正则表达式");
+        if (null != tree.simpleName()){
+            String className = tree.simpleName().toString();
+            if (isDto && !pattern.matcher(className).matches()){
+                context.reportIssue(this, tree.simpleName(), "重命名此类名以匹配 '" + format + "' 正则表达式");
+            }
+            super.visitClass(tree);
         }
-        super.visitClass(tree);
     }
 }

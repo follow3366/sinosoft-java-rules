@@ -48,8 +48,7 @@ public class UIControlActionLayerNamingRule extends BaseTreeVisitor implements J
 
     @Override
     public void visitClass(ClassTree tree) {
-        String className = tree.simpleName().toString();
-        if (isFacade && !pattern.matcher(className).matches()){
+        if (isFacade && (null != tree.simpleName()) && !pattern.matcher(tree.simpleName().toString()).matches()){
             context.reportIssue(this, tree.simpleName(), "重命名此类名以匹配 '" + format + "' 正则表达式");
         }
         super.visitClass(tree);

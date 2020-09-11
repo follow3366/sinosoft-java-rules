@@ -35,7 +35,7 @@ public class DTOCustomShouldImplementsSerializable extends BaseTreeVisitor imple
     // 判断是否 实现了Serializable接口，没实现就报问题
     @Override
     public void visitClass(ClassTree tree) {
-        if (isDTOCustom && !tree.symbol().type().isSubtypeOf("java.io.Serializable")){
+        if (isDTOCustom && (null != tree.simpleName()) && !tree.symbol().type().isSubtypeOf("java.io.Serializable")){
             context.reportIssue(this,tree.simpleName(),"com.sinosoft.claim.dto.custom 包下的类必须实现java.io.Serializable 接口。");
         }
         super.visitClass(tree);

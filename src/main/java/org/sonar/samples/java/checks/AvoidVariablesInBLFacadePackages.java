@@ -23,7 +23,7 @@ public class AvoidVariablesInBLFacadePackages extends BaseTreeVisitor implements
 
     @Override
     public void visitCompilationUnit(CompilationUnitTree tree) {
-        if (tree.packageDeclaration() != null) {
+        if (null != tree.packageDeclaration()) {
             String name = PackageUtils.packageName(tree.packageDeclaration(), ".");
             isFacade = name.equals("com.sinosoft.claim.bl.facade");//true
         }

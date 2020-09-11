@@ -40,7 +40,8 @@ public class BLActionLayerNamingRule extends BaseTreeVisitor implements JavaFile
 
     @Override
     public void visitCompilationUnit(CompilationUnitTree tree) {
-        if (tree.packageDeclaration() != null) {
+        isFacade = Boolean.FALSE;
+        if (null != tree.packageDeclaration()) {
             String name = PackageUtils.packageName(tree.packageDeclaration(), ".");
             isFacade = name.equals("com.sinosoft.claim.bl.action");//true
         }
@@ -49,11 +50,13 @@ public class BLActionLayerNamingRule extends BaseTreeVisitor implements JavaFile
 
     @Override
     public void visitClass(ClassTree tree) {
-        String className = tree.simpleName().toString();
-        int len = className.length();
-        if (len >=4 && !"Base".equals(className.substring(len-5,len)) && isFacade && !pattern.matcher(className).matches()){
-            context.reportIssue(this, tree.simpleName(), "重命名此类名以匹配 '" + format + "' 正则表达式");
+        if (null != tree.simpleName()) {
+            String className = tree.simpleName().toString();
+            int len = className.length();
+            if (len >= 4 && !"Base".equals(className.substring(len - 5, len)) && isFacade && !pattern.matcher(className).matches()) {
+                context.reportIssue(this, tree.simpleName(), "重命名此类名以匹配 '" + format + "' 正则表达式");
+            }
+            super.visitClass(tree);
         }
-        super.visitClass(tree);
     }
 }

@@ -26,7 +26,7 @@ public class SQLStatementsNotAllowedInBLLayer extends BaseTreeVisitor implements
 
     @Override
     public void visitCompilationUnit(CompilationUnitTree tree) {
-        if (tree.packageDeclaration() != null) {
+        if (null != tree.packageDeclaration()) {
             String name = PackageUtils.packageName(tree.packageDeclaration(), ".");
             isBLLayer = name.contains(".bl.");//true
         }
