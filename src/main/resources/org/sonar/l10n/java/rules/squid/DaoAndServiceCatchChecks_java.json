@@ -1,0 +1,13 @@
+{
+  "title": "[sunshine]Exception should catch in controller",
+  "type": "BUG",
+  "status": "ready",
+  "remediation": {
+    "func": "Constant\/Issue",
+    "constantCost": "10min"
+  },
+  "tags": [
+    "sunshine"
+  ],
+  "defaultSeverity": "Major"
+}

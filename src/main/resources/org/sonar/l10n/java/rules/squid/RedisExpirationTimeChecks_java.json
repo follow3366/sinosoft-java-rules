@@ -1,5 +1,5 @@
 {
-  "title": "Title of HttpConnTimeoutCheck",
+  "title": "Redis Session Should set Expiration Time.",
   "type": "CODE_SMELL",
   "status": "ready",
   "remediation": {
@@ -8,7 +8,8 @@
   },
   "tags": [
     "pitfall",
+    "performance",
     "sunshine"
   ],
-  "defaultSeverity": "Minor"
+  "defaultSeverity": "Major"
 }

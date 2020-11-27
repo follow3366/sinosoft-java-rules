@@ -45,7 +45,7 @@ public class AviodUsingHttpServletRequestToGetParam extends BaseTreeVisitor impl
     @Override
     public void visitMethod(MethodTree tree) {
         // 如果是WEB层，则进入
-        if (isWebLayer) {
+        if (isWebLayer && null != tree &&  null != tree.cfg()) {
             List<? extends ControlFlowGraph.Block> tcbs = tree.cfg().blocks();
             // 再来循环方法 进行编码规则校验
             for (ControlFlowGraph.Block tcb : tcbs) {
@@ -63,5 +63,6 @@ public class AviodUsingHttpServletRequestToGetParam extends BaseTreeVisitor impl
                 }
             }
         }
+        isWebLayer = Boolean.FALSE;
     }
 }

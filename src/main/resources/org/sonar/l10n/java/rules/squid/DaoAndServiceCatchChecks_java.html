@@ -1,0 +1,21 @@
+<p>[sunshine]Exception should catch in controller</p>
+<h2>Noncompliant Code Example</h2>
+<pre>
+public class xxxService {
+public void check() throws Exception{
+try{
+
+}catch(Excepton e){  //Noncompliant
+}
+}
+}
+
+</pre>
+<h2>Compliant Solution</h2>
+<pre>
+public class xxxService {
+public void check() throws Exception{
+throw new Exception()
+}
+}
+</pre>

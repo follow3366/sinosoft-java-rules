@@ -58,7 +58,9 @@ public final class RulesList {
       ForbiddenSaveBusinessDataToSession.class,
       AvoidUsingWildcardInSelectStatement.class,
       UsingPreMatch.class,
-      AviodUsingHttpServletRequestToGetParam.class));
+      AviodUsingHttpServletRequestToGetParam.class,
+      DaoAndServiceCatchChecks.class,
+      RedisExpirationTimeChecks.class));
   }
 
   public static List<Class<? extends JavaCheck>> getJavaTestChecks() {

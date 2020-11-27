@@ -23,14 +23,16 @@ public class PageRecordNamingRule extends BaseTreeVisitor implements JavaFileSca
     public void visitMethod(MethodTree tree) {
 //        List<Tree> vtl = tree.cfg().entryBlock().elements();
         Boolean isVariable;
-        List<? extends ControlFlowGraph.Block> tcbs = tree.cfg().blocks();
-        for (ControlFlowGraph.Block tcb : tcbs){
-            List<Tree> vtl = tcb.elements();
-            for (Tree vt : vtl){
-                isVariable = ("Variable".toUpperCase()).equals(vt.kind().name());
-                if (isVariable && "PageRecord".equals(((VariableTree) vt).type().toString())) {
-                    if (!"pageRecord".equals(((VariableTree) vt).simpleName().toString())) {
-                        context.reportIssue(this,((VariableTree) vt).simpleName(),"PageRecord 类型的变量命名必须为 pageRecord！");
+        if (null != tree &&  null != tree.cfg()) {
+            List<? extends ControlFlowGraph.Block> tcbs = tree.cfg().blocks();
+            for (ControlFlowGraph.Block tcb : tcbs) {
+                List<Tree> vtl = tcb.elements();
+                for (Tree vt : vtl) {
+                    isVariable = ("Variable".toUpperCase()).equals(vt.kind().name());
+                    if (isVariable && "PageRecord".equals(((VariableTree) vt).type().toString())) {
+                        if (!"pageRecord".equals(((VariableTree) vt).simpleName().toString())) {
+                            context.reportIssue(this, ((VariableTree) vt).simpleName(), "PageRecord 类型的变量命名必须为 pageRecord！");
+                        }
                     }
                 }
             }

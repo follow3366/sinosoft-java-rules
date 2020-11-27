@@ -92,5 +92,6 @@ public class RequestSetAttributeCheck extends BaseTreeVisitor implements JavaFil
                 }
             }
         }
+        isWebLayer = false;
     }
 }
